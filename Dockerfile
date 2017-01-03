@@ -9,6 +9,8 @@ RUN apt-get update && \
     libxml2-dev \
     libpng-dev \
     libjpeg-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
     git
 
 RUN docker-php-ext-install \
