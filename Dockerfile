@@ -11,6 +11,7 @@ RUN apt-get update && \
     libjpeg-dev \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
+    libjpeg62-dev \
     git
 
 RUN docker-php-ext-install \
