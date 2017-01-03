@@ -8,6 +8,7 @@ RUN apt-get update && \
     libmcrypt-dev \
     libxml2-dev \
     libpng-dev \
+    libjpeg-dev \
     git
 
 RUN docker-php-ext-install \
