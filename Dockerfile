@@ -11,15 +11,16 @@ RUN apt-get update && \
     libjpeg-dev \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
-    libjpeg62-dev \
     git
 
 RUN docker-php-ext-install \
     mysql \
     mcrypt \
-    soap \
-    gd \
+    soap \    
     mbstring
+
+RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/  &&  \
+    docker-php-ext-install gd
 
 ENV PHP_EXTRA_CONFIGURE_ARGS --enable-fpm --with-fpm-user=root --with-fpm-group=root
 
