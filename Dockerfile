@@ -20,9 +20,9 @@ RUN apt-get update && apt-get install -y \
 
 ENV PHP_EXTRA_CONFIGURE_ARGS --enable-fpm --with-fpm-user=root --with-fpm-group=root
 
-# ZipArchive: #
-RUN pecl install zip && \
-    docker-php-ext-enable zip
+# ZipArchive: #    
+RUN docker-php-ext-install zip && \
+    docker-php-ext-enable zip    
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
