@@ -1,4 +1,4 @@
-FROM php:5.5-fpm
+FROM php:5.6-fpm
 
 MAINTAINER AttractGroup
     
@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
         libssl-dev \
         libxml2-dev \
         git \
+        mysql-client \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libmcrypt-dev \
