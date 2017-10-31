@@ -17,7 +17,9 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install \
         mysql \
         soap \
-        mbstring
+        mbstring \
+        pdo \
+        pdo_mysql
 
 ENV PHP_EXTRA_CONFIGURE_ARGS --enable-fpm --with-fpm-user=root --with-fpm-group=root
 
@@ -28,4 +30,4 @@ RUN docker-php-ext-install zip && \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # для ускорения composer install
-RUN composer global require "hirak/prestissimo:^0.3"
+RUN composer global require "hirak/prestissimo:^0.3
