@@ -30,4 +30,4 @@ RUN docker-php-ext-install zip && \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # для ускорения composer install
-RUN composer global require "hirak/prestissimo:^0.3
+RUN composer global require "hirak/prestissimo:^0.3"
