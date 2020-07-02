@@ -39,8 +39,5 @@ RUN apk add --update --no-cache autoconf g++ make
 RUN pecl install redis
 RUN docker-php-ext-enable redis
 
-ARG TZ=UTC
-ENV TZ ${TZ}
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN composer global require "hirak/prestissimo:^0.3"
