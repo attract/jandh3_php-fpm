@@ -18,7 +18,6 @@ RUN apk add postgresql-dev
 RUN apk add zlib-dev
 RUN apk add icu-dev
 RUN apk add supervisor
-RUN apk add cron
 RUN apk add openssl-dev
 RUN apk add imap-dev
 RUN apk add unzip
