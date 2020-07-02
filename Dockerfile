@@ -1,42 +1,42 @@
-FROM php:7.4-fpm
+FROM php:7.0-fpm-alpine
 
 MAINTAINER AttractGroup
 
-RUN apt-get update && apt-get install -y \
-        libssl-dev \
-        libxml2-dev \
-        git \
-        default-mysql-client \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        libpng-dev \
-        libonig-dev \
-        imagemagick \
-        trimage \
-    && docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
-    && docker-php-ext-install -j$(nproc) gd
+RUN apk upgrade --update
+RUN apk add nano
+RUN apk add bash
+RUN apk add coreutils
+RUN apk add freetype-dev
+RUN apk add libjpeg-turbo-dev
+RUN apk add libmcrypt-dev
+RUN apk add libpng-dev
+RUN apk add curl
+RUN apk add libmemcached-dev
+RUN apk add git
+RUN apk add mysql-client
+RUN apk add postgresql-dev
+RUN apk add zlib-dev
+RUN apk add icu-dev
+RUN apk add supervisor
+RUN apk add cron
+RUN apk add openssl-dev
+RUN apk add imap-dev
+RUN apk add unzip
+RUN apk add krb5-dev
+RUN apk add libzip-dev
+RUN apk add libxml2-dev
+RUN apk add composer
+RUN apk add oniguruma-dev
 
-RUN docker-php-ext-install \
-        mysqli \
-        soap \
-        pdo \
-        pdo_mysql
+RUN apk add imagemagick
+RUN apk add trimage
 
-ENV PHP_EXTRA_CONFIGURE_ARGS --enable-fpm --with-fpm-user=root --with-fpm-group=root
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) json mbstring zip pdo pdo_mysql mysqli pdo_pgsql iconv gd exif xml opcache tokenizer ctype bcmath intl exif imap
 
-# mcrypt: #
-RUN apt-get update -y && \
-    apt-get install -y libmcrypt-dev && \
-    pecl install mcrypt-1.0.3 && \
-    docker-php-ext-enable mcrypt
+RUN apk add --update --no-cache autoconf g++ make
+RUN pecl install redis
+RUN docker-php-ext-enable redis
 
-# ZipArchive: #
-RUN apt-get install -y \
-        libzip-dev \
-        zip \
-  && docker-php-ext-install zip
-
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-# для ускорения composer install
+ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN composer global require "hirak/prestissimo:^0.3"
