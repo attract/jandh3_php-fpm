@@ -26,7 +26,7 @@ RUN apk add libxml2-dev
 RUN apk add oniguruma-dev
 RUN apk add imagemagick
 
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
     && docker-php-ext-install -j$(nproc) json mbstring zip pdo pdo_mysql mysqli pdo_pgsql mcrypt iconv gd exif xml opcache tokenizer ctype bcmath intl exif imap
 
 RUN apk add --update --no-cache autoconf g++ make
