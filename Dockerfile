@@ -27,7 +27,9 @@ RUN apk add oniguruma-dev
 RUN apk add imagemagick
 
 RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
-    && docker-php-ext-install -j$(nproc) json mbstring zip pdo pdo_mysql mysqli pdo_pgsql mcrypt iconv gd exif xml opcache tokenizer ctype bcmath intl exif imap
+    && docker-php-ext-install -j$(nproc) gd \
+    && docker-php-ext-install -j$(nproc) json mbstring zip pdo pdo_mysql mysqli pdo_pgsql iconv gd exif xml opcache tokenizer ctype bcmath intl exif imap
+
 
 RUN apk add --update --no-cache autoconf g++ make
 RUN pecl install redis
