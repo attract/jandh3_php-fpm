@@ -18,25 +18,22 @@ RUN apk add postgresql-dev
 RUN apk add zlib-dev
 RUN apk add icu-dev
 RUN apk add supervisor
-RUN apk add openssl-dev
 RUN apk add imap-dev
 RUN apk add unzip
 RUN apk add krb5-dev
 RUN apk add libzip-dev
 RUN apk add libxml2-dev
-RUN apk add composer
 RUN apk add oniguruma-dev
-RUN apk add soap
-
 RUN apk add imagemagick
-RUN apk add trimage
 
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) json mbstring zip pdo pdo_mysql mysqli pdo_pgsql iconv gd exif xml opcache tokenizer ctype bcmath intl exif imap
+RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-install -j$(nproc) json mbstring zip pdo pdo_mysql mysqli pdo_pgsql mcrypt iconv gd exif xml opcache tokenizer ctype bcmath intl exif imap soap opcache
 
 RUN apk add --update --no-cache autoconf g++ make
 RUN pecl install redis
 RUN docker-php-ext-enable redis
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN composer global require "hirak/prestissimo:^0.3"
