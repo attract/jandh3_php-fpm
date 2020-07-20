@@ -27,7 +27,10 @@ RUN apk add oniguruma-dev
 RUN apk add imagemagick
 
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install -j$(nproc) json mbstring zip pdo pdo_mysql mysqli pdo_pgsql mcrypt iconv gd exif xml opcache tokenizer ctype bcmath intl exif imap soap opcache
+    && docker-php-ext-install -j$(nproc) json mbstring zip pdo pdo_mysql mysqli pdo_pgsql mcrypt gd exif xml opcache tokenizer ctype bcmath intl exif imap soap opcache
+
+RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted gnu-libiconv
+ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 
 RUN apk add --update --no-cache autoconf g++ make
 RUN pecl install redis
