@@ -32,8 +32,8 @@ RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/i
 
 
 RUN apk add --update --no-cache autoconf g++ make
-RUN pecl install redis
-RUN docker-php-ext-enable redis
+RUN pecl install redis mcrypt-1.0.3
+RUN docker-php-ext-enable redis mcrypt
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
