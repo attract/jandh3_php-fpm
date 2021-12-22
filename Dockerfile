@@ -1,33 +1,37 @@
-FROM php:5.6-fpm
+FROM php:7.4.20-fpm-alpine3.13
 
 MAINTAINER AttractGroup
-    
-RUN apt-get update && apt-get install -y \
-        libssl-dev \
-        libxml2-dev \
-        git \
-        mysql-client \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        libmcrypt-dev \
-        libpng12-dev \
-    && docker-php-ext-install -j$(nproc) iconv mcrypt \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+
+RUN apk upgrade --update
+RUN apk add nano
+RUN apk add bash
+RUN apk add coreutils
+RUN apk add freetype-dev
+RUN apk add libjpeg-turbo-dev
+RUN apk add libmcrypt-dev
+RUN apk add libpng-dev
+RUN apk add curl
+RUN apk add libmemcached-dev
+RUN apk add git
+RUN apk add mysql-client
+RUN apk add postgresql-dev
+RUN apk add zlib-dev
+RUN apk add icu-dev
+RUN apk add supervisor
+RUN apk add imap-dev
+RUN apk add unzip
+RUN apk add krb5-dev
+RUN apk add libzip-dev
+RUN apk add libxml2-dev
+RUN apk add oniguruma-dev
+RUN apk add imagemagick
+RUN apk add composer
+
+RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd \
-    && docker-php-ext-install \
-        mysql \
-        soap \
-        mbstring \
-        pdo \
-        pdo_mysql
+    && docker-php-ext-install -j$(nproc) json mbstring zip pdo pdo_mysql mysqli pdo_pgsql iconv gd exif xml opcache tokenizer ctype bcmath intl exif imap opcache soap
 
-ENV PHP_EXTRA_CONFIGURE_ARGS --enable-fpm --with-fpm-user=root --with-fpm-group=root
 
-# ZipArchive: #    
-RUN docker-php-ext-install zip && \
-    docker-php-ext-enable zip    
-
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-# для ускорения composer install
-RUN composer global require "hirak/prestissimo:^0.3"
+RUN apk add --update --no-cache autoconf g++ make
+RUN pecl install redis mcrypt-1.0.3
+RUN docker-php-ext-enable redis mcrypt
