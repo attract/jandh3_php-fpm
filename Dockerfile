@@ -1,4 +1,4 @@
-FROM php:7.4.20-fpm-alpine3.13
+FROM php:7.4.25-fpm-alpine3.13
 
 MAINTAINER AttractGroup
 
